@@ -1,0 +1,58 @@
+
+import SimpleLightbox from "simplelightbox";
+import "simplelightbox/dist/simple-lightbox.min.css";
+
+// Створюємо змінну для лайтбокса ззовні
+let lightbox;
+
+export function createGallery(images) {
+  const galleryContainer = document.querySelector('.gallery');
+  
+  const markup = images.map(({ webformatURL, largeImageURL, tags, likes, views, comments, downloads }) => {
+    return `
+      <li class="gallery-item">
+        <a class="gallery-link" href="${largeImageURL}">
+          <img class="gallery-image" src="${webformatURL}" alt="${tags}" />
+        </a>
+        <div class="info">
+          <p class="info-item"><b>Likes</b><span>${likes}</span></p>
+          <p class="info-item"><b>Views</b><span>${views}</span></p>
+          <p class="info-item"><b>Comments</b><span>${comments}</span></p>
+          <p class="info-item"><b>Downloads</b><span>${downloads}</span></p>
+        </div>
+      </li>
+    `;
+  }).join('');
+
+  if (galleryContainer) {
+    galleryContainer.insertAdjacentHTML('beforeend', markup);
+    
+    // Ініціалізуємо або оновлюємо лайтбокс
+    if (!lightbox) {
+      lightbox = new SimpleLightbox('.gallery a', { captionsData: 'alt', captionDelay: 250 });
+    } else {
+      lightbox.refresh();
+    }
+  }
+}
+
+export function clearGallery() {
+  const galleryContainer = document.querySelector('.gallery');
+  if (galleryContainer) {
+    galleryContainer.innerHTML = '';
+  }
+}
+
+export function showLoader() {
+  const loaderElement = document.querySelector('.loader');
+  if (loaderElement) {
+    loaderElement.classList.remove('is-hidden');
+  }
+}
+
+export function hideLoader() {
+  const loaderElement = document.querySelector('.loader');
+  if (loaderElement) {
+    loaderElement.classList.add('is-hidden');
+  }
+}
