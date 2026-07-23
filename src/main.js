@@ -15,8 +15,6 @@ function handleSearch(event) {
 
   const form = event.currentTarget;
   const searchQuery = form.elements['search-text'].value.trim();
-
-  // Валідація на порожній рядок
   if (searchQuery === '') {
     iziToast.warning({
       title: 'Warning',
@@ -26,13 +24,11 @@ function handleSearch(event) {
     return;
   }
 
-  // Очищення галереї та показ лоадера перед запитом
   clearGallery();
   showLoader();
 
   getImagesByQuery(searchQuery)
     .then(data => {
-      // Перевірка на порожній масив результатів
       if (data.hits.length === 0) {
         iziToast.error({
           message: 'Sorry, there are no images matching your search query. Please try again!',
@@ -41,7 +37,6 @@ function handleSearch(event) {
         return;
       }
 
-      // Малювання карток, якщо масив не порожній
       createGallery(data.hits);
     })
     .catch(error => {
@@ -53,7 +48,6 @@ function handleSearch(event) {
       console.error(error);
     })
     .finally(() => {
-      // Ховаємо лоадер і скидаємо форму в будь-якому випадку
       hideLoader();
       form.reset();
     });

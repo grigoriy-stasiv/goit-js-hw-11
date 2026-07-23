@@ -2,7 +2,6 @@
 import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
 
-// Створюємо змінну для лайтбокса ззовні
 let lightbox;
 
 export function createGallery(images) {
@@ -26,8 +25,6 @@ export function createGallery(images) {
 
   if (galleryContainer) {
     galleryContainer.insertAdjacentHTML('beforeend', markup);
-    
-    // Ініціалізуємо або оновлюємо лайтбокс
     if (!lightbox) {
       lightbox = new SimpleLightbox('.gallery a', { captionsData: 'alt', captionDelay: 250 });
     } else {
